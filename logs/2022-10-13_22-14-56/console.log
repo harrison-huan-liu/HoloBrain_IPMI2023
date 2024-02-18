@@ -1,0 +1,102 @@
+2022-10-13 22:15:19,433	trainer	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:509	args_printer	INFO	
++----------------------+-----------------------------------+
+|      Parameter       |               Value               |
++======================+===================================+
+| alpha                | [0.01, 0.25, 0.5, 0.9, 0.99]      |
++----------------------+-----------------------------------+
+| batch_size           | 1                                 |
++----------------------+-----------------------------------+
+| class_number         | 2                                 |
++----------------------+-----------------------------------+
+| cuda                 | 0                                 |
++----------------------+-----------------------------------+
+| current_time         | 2022-10-13_22-14-56               |
++----------------------+-----------------------------------+
+| data_folder          | ./data/aal_cfc                    |
++----------------------+-----------------------------------+
+| data_padding         | 1                                 |
++----------------------+-----------------------------------+
+| data_step            | 15                                |
++----------------------+-----------------------------------+
+| data_window          | 30                                |
++----------------------+-----------------------------------+
+| debug                | 0                                 |
++----------------------+-----------------------------------+
+| desc                 |                                   |
++----------------------+-----------------------------------+
+| dropout              | 0.250                             |
++----------------------+-----------------------------------+
+| early_stop           | 50                                |
++----------------------+-----------------------------------+
+| epochs               | 20                                |
++----------------------+-----------------------------------+
+| gamma                | 0.990                             |
++----------------------+-----------------------------------+
+| learning_rate        | 0.001                             |
++----------------------+-----------------------------------+
+| log_path             | ./logs\2022-10-13_22-14-56        |
++----------------------+-----------------------------------+
+| mode                 | seq                               |
++----------------------+-----------------------------------+
+| model_folder         | ./saved_model\2022-10-13_22-14-56 |
++----------------------+-----------------------------------+
+| node_attention       | 0                                 |
++----------------------+-----------------------------------+
+| node_number          | 90                                |
++----------------------+-----------------------------------+
+| prediction_path      | ./output                          |
++----------------------+-----------------------------------+
+| repetitions          | 30                                |
++----------------------+-----------------------------------+
+| seed                 | 111                               |
++----------------------+-----------------------------------+
+| tensorboard_dir      | ./runs                            |
++----------------------+-----------------------------------+
+| thresholding_ratio   | 0.400                             |
++----------------------+-----------------------------------+
+| time                 | 40                                |
++----------------------+-----------------------------------+
+| wavelets_beta        | 1                                 |
++----------------------+-----------------------------------+
+| wavelets_gamma       | 0.005                             |
++----------------------+-----------------------------------+
+| wavelets_max_iter    | 1                                 |
++----------------------+-----------------------------------+
+| wavelets_min_err     | 0.000                             |
++----------------------+-----------------------------------+
+| wavelets_node_select | 10                                |
++----------------------+-----------------------------------+
+| wavelets_num         | 10                                |
++----------------------+-----------------------------------+
+| weight_decay         | 0                                 |
++----------------------+-----------------------------------+
+2022-10-13 22:15:19,433	trainer	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:673	fit	INFO	
+Training started.
+
+2022-10-13 22:15:19,436	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:686	fit	INFO	epoch	loss	acc
+2022-10-13 22:20:23,428	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	1	0.66469406040125	0.6666666666666666
+2022-10-13 22:25:20,106	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	2	0.6148269492932545	0.7096774193548387
+2022-10-13 22:30:13,493	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	3	0.5960448087062887	0.7096774193548387
+2022-10-13 22:35:16,749	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	4	0.5822689327341254	0.7096774193548387
+2022-10-13 22:40:18,643	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	5	0.5823369923057735	0.7096774193548387
+2022-10-13 22:45:18,737	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	6	0.5655019526039401	0.7204301075268817
+2022-10-13 22:50:17,614	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	7	0.5581060662785525	0.6935483870967742
+2022-10-13 22:55:17,856	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	8	0.5519453660454802	0.7150537634408602
+2022-10-13 23:00:17,324	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	9	0.5424200585612686	0.7096774193548387
+2022-10-13 23:05:16,041	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	10	0.5313282770615432	0.7096774193548387
+2022-10-13 23:10:15,148	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	11	0.5255484924681725	0.6989247311827957
+2022-10-13 23:15:19,625	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	12	0.5191391941800874	0.7473118279569892
+2022-10-13 23:20:18,420	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	13	0.5134082911435955	0.7096774193548387
+2022-10-13 23:25:21,289	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	14	0.5026388451537137	0.7365591397849462
+2022-10-13 23:30:20,155	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	15	0.5026937733374296	0.7150537634408602
+2022-10-13 23:35:18,824	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	16	0.4968314254155723	0.7365591397849462
+2022-10-13 23:40:21,141	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	17	0.49407094065099955	0.7204301075268817
+2022-10-13 23:45:19,512	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	18	0.4867840996813229	0.7473118279569892
+2022-10-13 23:50:13,843	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	19	0.4808808531792414	0.7634408602150538
+2022-10-13 23:55:06,968	root	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:723	fit	INFO	20	0.4757651954548814	0.7526881720430108
+2022-10-13 23:55:07,054	trainer	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:782	score	INFO	
+Scoring the test set.
+
+2022-10-14 00:26:40,241	trainer	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:849	score	INFO	
+The test set loss is: 0.7261
+2022-10-14 00:26:40,242	trainer	D:/research/Nonliner Dimensional Reduction/4_GNN_SPD/IPMI2023/IPMI-2023/train.py:852	score	INFO	The test set accuracy is: 0.5873

@@ -1,0 +1,105 @@
+2022-10-15 20:59:37,274	trainer	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:516	args_printer	INFO	
++----------------------+-------------------------------------------------------+
+|      Parameter       |                         Value                         |
++======================+=======================================================+
+| alpha                | [0.01, 0.25, 0.5, 0.9, 0.99]                          |
++----------------------+-------------------------------------------------------+
+| batch_size           | 1                                                     |
++----------------------+-------------------------------------------------------+
+| class_number         | 2                                                     |
++----------------------+-------------------------------------------------------+
+| cuda                 | 0                                                     |
++----------------------+-------------------------------------------------------+
+| current_time         | 2022-10-15_20-59-34                                   |
++----------------------+-------------------------------------------------------+
+| data_folder          | ./data/aal_cn_ad_cfc_iter1000                         |
++----------------------+-------------------------------------------------------+
+| data_padding         | 1                                                     |
++----------------------+-------------------------------------------------------+
+| data_step            | 15                                                    |
++----------------------+-------------------------------------------------------+
+| data_window          | 30                                                    |
++----------------------+-------------------------------------------------------+
+| debug                | 0                                                     |
++----------------------+-------------------------------------------------------+
+| desc                 | 使用 aal_cn_ad_cfc_iter1000 数据，对角线为 1，添加    |
+|                      | node_attention，添加 reward，epoch20                  |
++----------------------+-------------------------------------------------------+
+| dropout              | 0.250                                                 |
++----------------------+-------------------------------------------------------+
+| early_stop           | 50                                                    |
++----------------------+-------------------------------------------------------+
+| epochs               | 20                                                    |
++----------------------+-------------------------------------------------------+
+| gamma                | 0.990                                                 |
++----------------------+-------------------------------------------------------+
+| learning_rate        | 0.001                                                 |
++----------------------+-------------------------------------------------------+
+| log_path             | ./logs\2022-10-15_20-59-34                            |
++----------------------+-------------------------------------------------------+
+| mode                 | seq                                                   |
++----------------------+-------------------------------------------------------+
+| model_folder         | ./saved_model\2022-10-15_20-59-34                     |
++----------------------+-------------------------------------------------------+
+| node_attention       | 1                                                     |
++----------------------+-------------------------------------------------------+
+| node_number          | 90                                                    |
++----------------------+-------------------------------------------------------+
+| prediction_path      | ./output                                              |
++----------------------+-------------------------------------------------------+
+| repetitions          | 30                                                    |
++----------------------+-------------------------------------------------------+
+| reward               | 1                                                     |
++----------------------+-------------------------------------------------------+
+| seed                 | 111                                                   |
++----------------------+-------------------------------------------------------+
+| tensorboard_dir      | ./runs                                                |
++----------------------+-------------------------------------------------------+
+| thresholding_ratio   | 0.400                                                 |
++----------------------+-------------------------------------------------------+
+| time                 | 40                                                    |
++----------------------+-------------------------------------------------------+
+| wavelets_beta        | 1                                                     |
++----------------------+-------------------------------------------------------+
+| wavelets_gamma       | 0.005                                                 |
++----------------------+-------------------------------------------------------+
+| wavelets_max_iter    | 1                                                     |
++----------------------+-------------------------------------------------------+
+| wavelets_min_err     | 0.000                                                 |
++----------------------+-------------------------------------------------------+
+| wavelets_node_select | 10                                                    |
++----------------------+-------------------------------------------------------+
+| wavelets_num         | 10                                                    |
++----------------------+-------------------------------------------------------+
+| weight_decay         | 0                                                     |
++----------------------+-------------------------------------------------------+
+2022-10-15 20:59:37,274	trainer	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:684	fit	INFO	
+Training started.
+
+2022-10-15 20:59:37,275	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:697	fit	INFO	epoch	loss	acc
+2022-10-15 21:02:46,925	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	1	814.4035206844932	0.618421052631579
+2022-10-15 21:05:57,784	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	2	615.5538501739502	0.7631578947368421
+2022-10-15 21:09:00,623	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	3	584.411528938695	0.7631578947368421
+2022-10-15 21:12:06,682	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	4	569.6832760760659	0.7631578947368421
+2022-10-15 21:15:12,302	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	5	559.2526987979287	0.7631578947368421
+2022-10-15 21:18:16,085	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	6	540.8761789422286	0.7631578947368421
+2022-10-15 21:21:18,292	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	7	509.79757770739104	0.7631578947368421
+2022-10-15 21:24:21,871	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	8	454.3862805617483	0.7631578947368421
+2022-10-15 21:27:21,067	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	9	362.4615988480417	0.7631578947368421
+2022-10-15 21:30:19,993	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	10	352.4010103627255	0.7763157894736842
+2022-10-15 21:33:19,033	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	11	345.3555038351762	0.7763157894736842
+2022-10-15 21:36:18,552	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	12	339.36394320036237	0.7763157894736842
+2022-10-15 21:39:18,023	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	13	332.97097020400196	0.7894736842105263
+2022-10-15 21:42:17,006	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	14	323.7049025987324	0.8289473684210527
+2022-10-15 21:45:16,282	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	15	316.35133642899365	0.8157894736842105
+2022-10-15 21:48:16,271	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	16	341.67852005205657	0.8157894736842105
+2022-10-15 21:51:16,013	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	17	344.08936204408343	0.8552631578947368
+2022-10-15 21:54:15,876	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	18	345.2570609544453	0.8421052631578947
+2022-10-15 21:57:15,232	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	19	344.03795864707547	0.868421052631579
+2022-10-15 22:00:18,159	root	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:734	fit	INFO	20	334.8393054259451	0.8552631578947368
+2022-10-15 22:00:18,246	trainer	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:793	score	INFO	
+Scoring the test set.
+
+2022-10-15 22:12:58,653	trainer	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:860	score	INFO	
+The test set loss is: 475.4644
+2022-10-15 22:12:58,653	trainer	D:\research\Nonliner Dimensional Reduction\4_GNN_SPD\IPMI2023\IPMI-2023\train.py:863	score	INFO	The test set accuracy is: 0.6538
