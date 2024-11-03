@@ -9,59 +9,88 @@ import matplotlib
 import matplotlib.pyplot as plt
 from IPython.core.pylabtools import figsize
 from timeit import timeit
-# from utils import cov
+from utils import cov, corrcoef
+import warnings
+
+import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 
-def thresholding(fc):
-    node_num = len(fc)
-    T = 0.1  # keeping T*100% links
+def thresholding(fc, data_path, ratio=0.8):
+    # keeping T*100% links
+    node_num = fc.shape[-1]
     fc[fc < 0] = 0
 
-    fc_triu = np.triu(fc, -1)
-    K = np.count_nonzero(fc_triu)
-    KT = T * ((node_num**2 - node_num) / 2)
+    fc_tril = np.tril(fc, -1)
+    K = np.count_nonzero(fc_tril)
+    KT = ratio * ((node_num**2 - node_num) / 2)
     KT = math.ceil(KT)
 
     if KT >= K:
         thr = 0
     else:
-        thr = np.partition(fc_triu.reshape(-1), -KT, -1)[-KT]
+        thr = np.partition(fc_tril.reshape(*fc_tril.shape[:-2], -1), -KT, -1)[
+            ..., [[-KT]]
+        ]
 
     fc[fc < thr] = 0
 
     if not np.all(np.sum(fc > 0, -1) > 1):
-        raise Exception('Thresholding is too large, please enlarge the threshold')
+        print('the wrong datafile: ', data_path)
+        warnings.warn('Thresholding is too large, please enlarge the threshold')
 
     return fc
 
 
-def harmonic_wavelets(graph):
-    wavelets_num = 6
-    beta = 1
-    gama = 0.005
-    max_iter = 1000
-    min_err = 0.0001
-    node_select = 10
-    node_num = len(graph)
-    temp_D = np.diag(np.sum(graph, axis=1))
+def harmonic_wavelets(
+    graph,
+    wavelets_num=10,
+    beta=1,
+    gamma=0.005,
+    max_iter=1000,
+    min_err=0.0001,
+    node_select=10,
+):
+    # # Indiviual wavelets
+    # node_num = graph.shape[-1]
+    # temp_D = np.eye(node_num) * np.sum(graph, axis=-1, keepdims=True)
+    # latentlaplacian = temp_D - graph
+    # u_vec = np.zeros_like(graph)
+    #
+    # diag_idx = np.arange(node_num)
+    # np.put_along_axis(
+    #     u_vec, np.argpartition(graph, -node_select)[..., -node_select:], 1, -1
+    # )
+    # u_vec[..., diag_idx, diag_idx] = 1
+    #
+    # temp_v = 1 - u_vec
+    # temp_v = np.eye(temp_v.shape[-1]) * np.expand_dims(temp_v, -2)
+    # Theta = beta * temp_v
+    # _, temp_phi = np.linalg.eigh(latentlaplacian + Theta)
+    # phi_k = np.expand_dims(temp_phi[..., :wavelets_num], -3)
+
+    # Common wavelets, still a little error in objective function
+    node_num = graph.shape[-1]
+    temp_D = np.eye(node_num) * np.sum(graph, axis=-1, keepdims=True)
     latentlaplacian = temp_D - graph
     _, temp_phi = np.linalg.eigh(latentlaplacian)
     u_vec = np.zeros_like(graph)
-    phi_k = temp_phi[:, 0:wavelets_num]
+    phi_k = np.expand_dims(temp_phi[..., :wavelets_num], -3)
 
-    it = 1
+    it = 0
     err = np.inf
-    while it < max_iter:
+    diag_idx = np.arange(node_num)
+    while err > min_err and it < max_iter:
         np.put_along_axis(
             u_vec, np.argpartition(graph, -node_select)[..., -node_select:], 1, -1
         )
-        np.fill_diagonal(u_vec, 1)
+        u_vec[..., diag_idx, diag_idx] = 1
 
         temp_v = 1 - u_vec
         temp_v = np.eye(temp_v.shape[-1]) * np.expand_dims(temp_v, -2)
         Theta = beta * temp_v
         temp_increment = 2 * (np.eye(node_num) - phi_k @ phi_k.swapaxes(-2, -1))
-        phi_increment = -gama * temp_increment @ Theta @ phi_k
+        phi_increment = -gamma * temp_increment @ Theta @ phi_k
         Q, R = np.linalg.qr(
             (np.eye(node_num) - phi_k @ phi_k.swapaxes(-2, -1)) @ phi_increment
         )
@@ -73,35 +102,87 @@ def harmonic_wavelets(graph):
         phi_k = phi_k @ BC[..., :wavelets_num, :] + Q @ BC[..., wavelets_num:, :]
         err = np.max(np.linalg.norm(phi_increment, 'fro', (-2, -1)))
         it += 1
+        print(it, err)
 
     return phi_k
 
 
-def cfc(wavelets, bold):
+def harmonics(
+    graph,
+    wavelets_num=55,
+    beta=1,
+    gamma=0.005,
+    max_iter=1000,
+    min_err=0.0001,
+):
+    node_num = graph.shape[-1]
+    temp_D = np.eye(node_num) * np.sum(graph, axis=-1, keepdims=True)
+    latentlaplacian = temp_D - graph
+    _, temp_phi = np.linalg.eigh(latentlaplacian)
+    phi_k = np.expand_dims(temp_phi[..., :wavelets_num], -3)
+
+    # it = 0
+    # err = np.inf
+    # while err > min_err and it < max_iter:
+    #     temp_increment = 2 * (np.eye(node_num) - phi_k @ phi_k.swapaxes(-2, -1))
+    #     phi_increment = -gamma * temp_increment @ phi_k
+    #     Q, R = np.linalg.qr(
+    #         (np.eye(node_num) - phi_k @ phi_k.swapaxes(-2, -1)) @ phi_increment
+    #     )
+    #     A = phi_k.swapaxes(-2, -1) @ phi_increment
+    #     temp_matrix1 = np.concatenate([A, -R.swapaxes(-2, -1)], -1)
+    #     temp_matrix2 = np.concatenate([R, np.zeros_like(R)], -1)
+    #     temp_matrix3 = np.concatenate([temp_matrix1, temp_matrix2], -2)
+    #     BC = expm(temp_matrix3)[..., :wavelets_num]
+    #     phi_k = phi_k @ BC[..., :wavelets_num, :] + Q @ BC[..., wavelets_num:, :]
+    #     err = np.max(np.linalg.norm(phi_increment, 'fro', (-2, -1)))
+    #     it += 1
+    #     print(it, err)
+
+    return phi_k
+
+
+def cfc(wavelets, bold, wavelets_num=10):
+    # a = np.expand_dims(wavelets[..., :wavelets_num].swapaxes(-2, -1), -3)
+    # b = np.expand_dims(np.expand_dims(bold.swapaxes(-2, -1), -2), -4)
+    # c = a*b
     powers = np.sum(
-        np.expand_dims(wavelets.swapaxes(-2, -1), -3)
-        * np.expand_dims(bold.swapaxes(-2, -1), -2),
+        np.expand_dims(wavelets[..., :wavelets_num].swapaxes(-2, -1), -3)
+        * np.expand_dims(np.expand_dims(bold.swapaxes(-2, -1), -2), -4),
         -1,
     )
-    cfcs = np.corrcoef(powers.swapaxes(-2, -1))
+    cfcs = corrcoef(powers.swapaxes(-2, -1))
     return cfcs, powers
+
+
+def get_cfc(bold, data_path):
+    fc = np.corrcoef(bold)
+    Graph = thresholding(fc, data_path)
+    wavelets = harmonic_wavelets(Graph)
+    # wavelets = harmonics(Graph)
+    cfc_matrix, power = cfc(wavelets, BOLD_window)
+    return cfc_matrix
 
 
 if __name__ == '__main__':
     # BOLD_window is the bold signal data of a single subject, each row stands for the signal of each brain node
-    BOLD_window = np.loadtxt('data/TimeSeries101.csv', delimiter=',')
-    # np.random.seed(0)
-    # BOLD_window = np.random.rand(30, 15)
-    df = np.transpose(BOLD_window)
-    df = pd.DataFrame(df)
-    fc = df.corr()
-    fc = fc.values
-    # Graph is the adjacence matrix of the brain network(the topology of network)
-    Graph = threholding(fc)
-    wavelets = harmonic_wavelets(Graph)
-    # cfc_matrix is the CFC matrix(SPD matrix)
-    cfc_matrix, power = cfc(wavelets, BOLD_window)
-
+    # BOLD_window = np.loadtxt('data/TimeSeries101.csv', delimiter=',')
+    np.random.seed(111)
+    BOLD_window = np.random.rand(90, 100)
+    # df = np.transpose(BOLD_window)
+    # df = pd.DataFrame(df)
+    # fc = df.corr()
+    # fc = fc.values
+    # # Graph is the adjacence matrix of the brain network(the topology of network)
+    # Graph = thresholding(fc)
+    # wavelets = harmonic_wavelets(Graph)
+    # # cfc_matrix is the CFC matrix(SPD matrix)
+    # cfc_matrix, power = cfc(wavelets, BOLD_window)
+    # print(cfc_matrix)
+    a = get_cfc(BOLD_window[..., :15], data_path='')
+    b = get_cfc(BOLD_window[..., 15:30], data_path='')
+    print(a)
+    print(b)
 
 # # fig1 = plt.figure()
 # plt.matshow(Graph)

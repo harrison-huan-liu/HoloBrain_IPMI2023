@@ -4,3 +4,9 @@ data/
 saved_model/
 runs/
 logs/
+related_paper/
+ohbm2023/
+*.zip
+MICCAI_code_data/
+compare/
+IPMI-2023/

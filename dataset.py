@@ -5,7 +5,7 @@ import networkx as nx
 from utils import sorted_aphanumeric, sliding_window, corrcoef
 import os
 import pickle
-from wavelets import cfc, thresholding, harmonic_wavelets
+from wavelets import cfc, thresholding, harmonic_wavelets, harmonics
 from itertools import starmap
 import numpy as np
 import time
@@ -86,13 +86,13 @@ class GraphDataset(Dataset):
     def __init__(
         self,
         path,
-        ratio=0.4,
-        wavelets_num=10,
-        beta=0.1,
-        gamma=0.1,
-        max_iter=100,
-        min_err=1,
-        node_select=90,
+        ratio,
+        wavelets_num,
+        beta,
+        gamma,
+        max_iter,
+        min_err,
+        node_select,
     ):
         super().__init__()
         self.files = sorted_aphanumeric(
@@ -114,35 +114,33 @@ class GraphDataset(Dataset):
             bold, label = pickle.load(f)
         bolds = np.float32(bold)[None, ...]
         fcs = corrcoef(bolds)
-        adjs = thresholding(fcs)#,, self.files[idx] ratio=self.ratio
+        adjs = thresholding(fcs, self.files[idx], ratio=self.ratio)
         graphs = list(map(nx.from_numpy_array, adjs))
-        # wavelets = [
-        #     harmonic_wavelets(
-        #         adj,
-        #         wavelets_num=self.wavelets_num,
-        #         beta=self.beta,
-        #         gamma=self.gamma,
-        #         max_iter=self.max_iter,
-        #         min_err=self.min_err,
-        #         node_select=self.node_select,
-        #     )
-        #     for adj in adjs
-        # ]
-        # cfcs = [
-        #     torch.Tensor(cfc(wavelet, bold)[0])
-        #     for wavelet, bold in zip(wavelets, bolds)
-        # ]
-        cfcs=fcs
-        labels = torch.tensor([label] * len(graphs))
+        wavelets = [
+            harmonic_wavelets(
+                adj,
+                wavelets_num=self.wavelets_num,
+                beta=self.beta,
+                gamma=self.gamma,
+                max_iter=self.max_iter,
+                min_err=self.min_err,
+                node_select=self.node_select,
+            )
+            for adj in adjs
+        ]
+        cfcs = [
+            torch.Tensor(cfc(wavelet, bold)[0])
+            for wavelet, bold in zip(wavelets, bolds)
+        ]
         filename_head_tail = os.path.split(self.files[idx])
-        return graphs, cfcs, torch.tensor([label] * len(fcs)), filename_head_tail[1], bolds, labels
+        return graphs, cfcs, torch.tensor([label] * len(fcs)), filename_head_tail[1]
 
 
 class GraphSeqFileDataset(Dataset):
     def __init__(self, path):
         super().__init__()
         self.files = sorted_aphanumeric(
-            os.path.join(path, file) for file in os.listdir(os.path.abspath(path))
+            os.path.join(path, file) for file in os.listdir(path)
         )
 
     def __len__(self):
